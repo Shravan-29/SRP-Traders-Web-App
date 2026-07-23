@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+.offer-banner {
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    #7f1d1d 0%,
+    #111827 30%,
+    #991b1b 60%,
+    #111827 100%
+  );
+
+  border-top: 1px solid rgba(255, 215, 0, 0.35);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.35);
+
+  box-shadow:
+    0 0 20px rgba(220, 38, 38, 0.35),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
+.offer-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.offer-marquee span {
+  white-space: nowrap;
+  padding: 12px 80px;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #ffd700,
+    #ffb347,
+    #ffffff,
+    #ffd700
+  );
+
+  background-size: 300% auto;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shine 4s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes shine {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 300% center;
+  }
+}
