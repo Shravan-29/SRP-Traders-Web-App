@@ -34,10 +34,10 @@ public class DeliveryOtpService {
             throw new RuntimeException("OTP can only be generated when order is OUT FOR DELIVERY!");
         }
 
-        // Purana OTP delete karo
+        // Old OTP must Be Delete
         deliveryOtpRepository.deleteByOrderId(orderId);
 
-        // Naya 6-digit OTP generate karo
+        // New 6-digit OTP generate
         String otp = String.format("%06d", new Random().nextInt(999999));
 
         DeliveryOtp deliveryOtp = DeliveryOtp.builder()
@@ -49,7 +49,7 @@ public class DeliveryOtpService {
 
         deliveryOtpRepository.save(deliveryOtp);
 
-        // Professional email bhejo
+        // Professional email will send
         sendDeliveryOtpEmail(order, otp);
 
         return ApiResponse.success("Delivery OTP sent to customer!", null);
@@ -68,17 +68,17 @@ public class DeliveryOtpService {
             throw new RuntimeException("Invalid OTP! Please check and try again.");
         }
 
-        // OTP verified
+        // Here OTP verified
         deliveryOtp.setVerified(true);
         deliveryOtp.setUsed(true);
         deliveryOtp.setVerifiedAt(java.time.LocalDateTime.now());
         deliveryOtpRepository.save(deliveryOtp);
 
-        // Order DELIVERED mark karo
+        // Here Order DELIVERED Marked
         order.setStatus(Order.OrderStatus.DELIVERED);
         orderRepository.save(order);
 
-        // Delivery confirmation email bhejo
+        // Delivery confirmation email
         sendDeliveryConfirmationEmail(order);
 
         return ApiResponse.success("OTP verified! Order marked as DELIVERED.", null);
@@ -96,7 +96,7 @@ public class DeliveryOtpService {
                     ? order.getCreatedAt().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
                     : "N/A";
 
-            // Build items list
+            //items list
             StringBuilder itemsHtml = new StringBuilder();
             if (order.getOrderItems() != null) {
                 order.getOrderItems().forEach(item ->

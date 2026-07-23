@@ -172,7 +172,6 @@ public class InvoiceController {
                 "<div class='header'>" +
                 "<div class='header-top'>" +
                 "<div class='brand'>" +
-//                "<div class='brand-icon'>&#128296;</div>" +
                 "<div class='brand-icon' style='background:rgba(255,255,255,0.95);padding:4px;'>" +
                 "<img src='http://localhost:5173/logo.png' alt='SRP' style='width:75px;height:75px;object-fit:contain;'/>" +
                 "</div>" +

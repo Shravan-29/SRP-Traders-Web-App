@@ -55,9 +55,6 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
-//    public enum Role {
-//        USER, ADMIN
-//    }
     //for delievery boy page
 public enum Role {
     USER, ADMIN, DELIVERY

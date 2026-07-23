@@ -1,100 +1,3 @@
-//package com.srptraders.backend.controller;
-//
-//import com.srptraders.backend.exception.ResourceNotFoundException;
-//import com.srptraders.backend.entity.User;
-//import com.srptraders.backend.repository.UserRepository;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.core.Authentication;
-//import com.srptraders.backend.dto.ApiResponse;
-//import com.srptraders.backend.dto.UserDTO;
-//import com.srptraders.backend.service.UserService;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.web.bind.annotation.*;
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/api")
-//@RequiredArgsConstructor
-//public class UserController {
-//
-//    private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
-//    private final UserService userService;
-//
-//    @GetMapping("/user/me")
-//    public ResponseEntity<UserDTO> getCurrentUser(Authentication auth) {
-//        return ResponseEntity.ok(
-//                userService.getCurrentUser(auth.getName()));
-//    }
-//
-//    @GetMapping("/admin/users")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<List<UserDTO>> getAllUsers() {
-//        return ResponseEntity.ok(userService.getAllUsers());
-//    }
-//
-//    @GetMapping("/admin/users/pending")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<List<UserDTO>> getPendingUsers() {
-//        return ResponseEntity.ok(userService.getPendingUsers());
-//    }
-//
-//    @PutMapping("/admin/users/{id}/approve")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<ApiResponse> approveUser(@PathVariable Long id) {
-//        return ResponseEntity.ok(userService.approveUser(id));
-//    }
-//
-//    @PutMapping("/admin/users/{id}/reject")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<ApiResponse> rejectUser(@PathVariable Long id) {
-//        return ResponseEntity.ok(userService.rejectUser(id));
-//    }
-//
-//    @PutMapping("/admin/users/{id}/ban")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<ApiResponse> banUser(@PathVariable Long id) {
-//        return ResponseEntity.ok(userService.banUser(id));
-//    }
-//
-//    @DeleteMapping("/admin/users/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
-//        return ResponseEntity.ok(userService.deleteUser(id));
-//    }
-//    @PutMapping("/user/profile")
-//    public ResponseEntity<UserDTO> updateProfile(
-//            @RequestBody UserDTO updateRequest,
-//            Authentication auth) {
-//        User user = userRepository.findByEmail(auth.getName())
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
-//        user.setFullName(updateRequest.getFullName());
-//        user.setMobile(updateRequest.getMobile());
-//        user.setAddress(updateRequest.getAddress());
-//        user.setGstNumber(updateRequest.getGstNumber());
-//        userRepository.save(user);
-//        return ResponseEntity.ok(UserDTO.fromUser(user));
-//    }
-//
-//    @PutMapping("/user/change-password")
-//    public ResponseEntity<ApiResponse> changePassword(
-//            @RequestBody java.util.Map<String, String> request,
-//            Authentication auth) {
-//        User user = userRepository.findByEmail(auth.getName())
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
-//        if (!passwordEncoder.matches(request.get("oldPassword"), user.getPassword())) {
-//            throw new RuntimeException("Current password is incorrect!");
-//        }
-//        user.setPassword(passwordEncoder.encode(request.get("newPassword")));
-//        userRepository.save(user);
-//        return ResponseEntity.ok(ApiResponse.success("Password changed successfully!", null));
-//    }
-//}
-
-//new code
 package com.srptraders.backend.controller;
 
 import com.srptraders.backend.exception.ResourceNotFoundException;
@@ -192,7 +95,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Password changed successfully!", null));
     }
 
-    // ─── Email se Approve (browser mein link click hoga) ──────────
+    // ─── Approve via Email ──
     @GetMapping(value = "/admin/users/{id}/approve-email", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> approveUserViaEmail(@PathVariable Long id) {
         try {
@@ -220,7 +123,7 @@ public class UserController {
         }
     }
 
-    // ─── Email se Reject (browser mein link click hoga) ──────────
+    // ─── Reject through Email ───
     @GetMapping(value = "/admin/users/{id}/reject-email", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> rejectUserViaEmail(@PathVariable Long id) {
         try {

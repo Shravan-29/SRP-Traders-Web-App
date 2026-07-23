@@ -23,10 +23,6 @@ public class RecommendationService {
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
 
-    /**
-     * Product Detail page ke liye — same category ke top rated products
-     * Current product exclude hoga
-     */
     public List<ProductDTO> getSimilarProducts(Long productId, int limit) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
@@ -56,21 +52,15 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Logged in user ke liye personalized recommendations
-     * Purchase history + wishlist + cart dekh ke suggest karta hai
-     */
     public List<ProductDTO> getPersonalizedRecommendations(String email, int limit) {
         try {
             var user = userRepository.findByEmail(email)
                     .orElse(null);
             if (user == null) return getTopRatedProducts(limit);
 
-            // User ki purchased categories collect karo
+            // Collect User PurChased Categories
             Set<Long> purchasedCategoryIds = new HashSet<>();
             Set<Long> excludeProductIds = new HashSet<>();
-
-            // Orders se categories
             orderRepository.findByUserIdOrderByCreatedAtDesc(user.getId())
                     .forEach(order -> {
                         if (order.getOrderItems() != null) {
@@ -84,8 +74,6 @@ public class RecommendationService {
                             });
                         }
                     });
-
-            // Cart se categories
             cartRepository.findByUserId(user.getId())
                     .forEach(cart -> {
                         excludeProductIds.add(cart.getProduct().getId());
@@ -94,7 +82,7 @@ public class RecommendationService {
                         }
                     });
 
-            // Wishlist se categories
+            //Collecting categories from wishlist
             wishlistRepository.findByUserId(user.getId())
                     .forEach(wish -> {
                         excludeProductIds.add(wish.getProduct().getId());
@@ -103,7 +91,7 @@ public class RecommendationService {
                         }
                     });
 
-            // User reviews se categories
+            //Collecting categories from user Reviews
             reviewRepository.findByUserId(user.getId())
                     .forEach(review -> {
                         if (review.getProduct() != null && review.getProduct().getCategory() != null) {
@@ -111,7 +99,6 @@ public class RecommendationService {
                         }
                     });
 
-            // Agar koi history nahi — top rated return karo
             if (purchasedCategoryIds.isEmpty()) {
                 return getTopRatedProducts(limit);
             }
@@ -122,14 +109,11 @@ public class RecommendationService {
                                             org.springframework.data.domain.Sort.Direction.DESC, "rating")))
                     .getContent();
 
-            // Score calculate karo har product ke liye
             return allProducts.stream()
                     .filter(p -> !excludeProductIds.contains(p.getId()))
                     .filter(p -> p.getCategory() != null)
                     .map(p -> {
                         double score = 0;
-
-                        // Category match karta hai toh zyada score
                         if (purchasedCategoryIds.contains(p.getCategory().getId())) {
                             score += 50;
                         }
@@ -159,16 +143,12 @@ public class RecommendationService {
         }
     }
 
-    /**
-     * Cart page ke liye — cart mein jo products hain unki categories ke
-     * other popular products suggest karo
-     */
     public List<ProductDTO> getCartRecommendations(List<Long> cartProductIds, int limit) {
         if (cartProductIds == null || cartProductIds.isEmpty()) {
             return getTopRatedProducts(limit);
         }
 
-        // Cart products ki categories collect karo
+        // Collected categories from cart products
         Set<Long> cartCategoryIds = cartProductIds.stream()
                 .map(id -> productRepository.findById(id).orElse(null))
                 .filter(Objects::nonNull)
@@ -197,9 +177,6 @@ public class RecommendationService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Fallback — top rated products
-     */
     public List<ProductDTO> getTopRatedProducts(int limit) {
         return productRepository.findTop8ByActiveTrueOrderByRatingDesc()
                 .stream()
