@@ -1,7 +1,7 @@
 # SRP Traders -> E-Commerce Web Application (Build Based on User Specified Requirements)
 
 Hardware & industrial tools platform serving professionals across Mumbai.
-Built as a full-stack web application with a focus on real business workflows — from order management to delivery verification.
+Built as a full-stack web application with a focus on real business workflows - from order management to delivery verification.
 
 ---
 
