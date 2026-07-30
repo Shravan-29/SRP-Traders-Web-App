@@ -84,11 +84,6 @@ const ManageUsers = () => {
     }
   }
 
-  // const filteredUsers = users.filter(u => {
-  //   if (filter === 'ALL') return u.role !== 'ADMIN'
-  //   return u.status === filter && u.role !== 'ADMIN'
-  // })
-
   const filteredUsers = users.filter(u => {
     if (filter === 'ALL') return u.role === 'USER'
   })
