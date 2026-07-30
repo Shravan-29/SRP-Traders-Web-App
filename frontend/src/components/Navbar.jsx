@@ -62,16 +62,6 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
-          {/* Logo */}
-          {/* <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-            <img src="/logo.png" alt="SRP Traders" className="w-16 h-16 object-contain"/>
-            <div>
-              <span className="font-bold text-xl text-slate-900">SRP</span>
-              <span className="font-bold text-xl text-sky-500"> Traders</span>
-              <div className="text-[10px] text-slate-400 leading-none -mt-0.5">Hardware & Tools</div>
-            </div>
-          </Link> */}
-
   <Link to="/" className="flex items-center gap-1 flex-shrink-0">
   <img
     src="/logo.png"
