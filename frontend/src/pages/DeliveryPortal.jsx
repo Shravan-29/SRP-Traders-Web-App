@@ -19,12 +19,6 @@ const DeliveryPortal = () => {
   const [error, setError] = useState('')
   const [loginForm, setLoginForm] = useState({ email: '', password: '' })
 
-  // useEffect(() => {
-  //   if (token && deliveryUser) {
-  //     setView(VIEWS.ORDERS)
-  //     loadOrders()
-  //   }
-  // }, [])
   useEffect(() => {
     if (token && deliveryUser) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
@@ -117,52 +111,7 @@ const DeliveryPortal = () => {
     setView(VIEWS.ORDERS)
     loadOrders()
   }
-
-  // LOGIN
-  // if (view === VIEWS.LOGIN) return (
-  //   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
-  //     <div className="w-full max-w-sm">
-  //       <div className="text-center mb-8">
-  //         <img src="/logo.png" alt="SRP Traders" className="w-20.10 h-20.10 object-contain mx-auto mb-1"
-  //           onError={(e) => e.target.style.display = 'none'} />
-  //         {/* <h1 className="text-2xl font-bold text-white">SRP Traders</h1> */}
-  //         <p className="text-slate-400 text-sm mt-1">Delivery Staff Portal</p>
-  //       </div>
-  //       <div className="bg-white rounded-2xl p-6 shadow-2xl">
-  //         <h2 className="font-bold text-slate-900 mb-1">Staff Login</h2>
-  //         <p className="text-slate-500 text-sm mb-5">Enter your delivery staff credentials</p>
-  //         <form onSubmit={login} className="space-y-4">
-  //           <div>
-  //             <label className="block text-xs font-medium text-slate-600 mb-1">Email</label>
-  //             <input type="email" required placeholder="staff@srptraders.in"
-  //               value={loginForm.email}
-  //               onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-  //               className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-sky-400 text-sm" />
-  //           </div>
-  //           <div>
-  //             <label className="block text-xs font-medium text-slate-600 mb-1">Password</label>
-  //             <input type="password" required placeholder="••••••••"
-  //               value={loginForm.password}
-  //               onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-  //               className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-sky-400 text-sm" />
-  //           </div>
-  //           {error && (
-  //             <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3">
-  //               <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-  //               <p className="text-red-600 text-xs">{error}</p>
-  //             </div>
-  //           )}
-  //           <button type="submit" disabled={loading}
-  //             className="w-full py-3 bg-sky-500 hover:bg-sky-600 disabled:opacity-60 text-white font-semibold rounded-xl transition-colors text-sm flex items-center justify-center gap-2">
-  //             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-  //             {loading ? 'Logging in...' : 'Login'}
-  //           </button>
-  //         </form>
-  //       </div>
-  //     </div>
-  //   </div>
-  // )
-
+  
   // LOGIN
 if (view === VIEWS.LOGIN) return (
   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
