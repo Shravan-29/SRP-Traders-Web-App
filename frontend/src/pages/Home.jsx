@@ -4,8 +4,6 @@ import ProductCard from '../components/ProductCard'
 import { ProductSkeleton } from '../components/LoadingSkeleton'
 import api from '../services/api'
 import toast from 'react-hot-toast'
-// import { ArrowRight, Zap, Shield, Truck, Star, Award, ChevronRight, Phone, User, Drill } from 'lucide-react'
-// import { Wrench } from 'lucide-react'
 import RecommendationSection from '../components/RecommendationSection'
 import {
   ArrowRight, Zap, Shield, Truck, Star, Award,
@@ -23,15 +21,6 @@ const DEMO_PRODUCTS = [
   { id: 7, name: 'HVLP Spray Gun 1.4mm Nozzle Kit', category: 'Painting', price: 1899, originalPrice: 2500, discount: 24, rating: 4.5, reviewCount: 43, image: 'https://placehold.co/300x300/e0f2fe/0284c7?text=Spray+Gun' },
   { id: 8, name: 'ARC Welding Machine 200A Inverter', category: 'Welding', price: 8499, originalPrice: 11000, discount: 23, rating: 4.7, reviewCount: 78, image: 'https://placehold.co/300x300/e0f2fe/0284c7?text=Welding+Machine' },
 ]
-
-// const CATEGORIES = [
-//   { name: 'Power Tools', icon: '🔌', color: 'from-sky-400 to-sky-600', count: '120+ Products' },
-//   { name: 'Hand Tools', icon: '🔧', color: 'from-slate-600 to-slate-800', count: '200+ Products' },
-//   { name: 'Safety Equipment', icon: '🦺', color: 'from-amber-400 to-amber-600', count: '80+ Products' },
-//   { name: 'Welding & Cutting', icon: '🔥', color: 'from-red-400 to-red-600', count: '60+ Products' },
-//   { name: 'Plumbing', icon: '🚿', color: 'from-teal-400 to-teal-600', count: '90+ Products' },
-//   { name: 'Electrical', icon: '💡', color: 'from-yellow-400 to-yellow-600', count: '110+ Products' },
-// ]
 
 const CATEGORY_ICONS = {
   'Power Tools': Zap,
@@ -51,266 +40,10 @@ const CATEGORIES = [
   { name: 'Electrical', color: 'from-yellow-400 to-yellow-600', count: '110+ Products' },
 ]
 
-// // ─── Cinematic Intro ─────────────────────────────────────────
-// const CinematicIntro = ({ onComplete }) => {
-//   const introRef = useRef(null)
-
-//   useEffect(() => {
-//     // Auto complete after 9 seconds
-//     const timer = setTimeout(() => {
-//       onComplete()
-//     }, 12000)
-//     return () => clearTimeout(timer)
-//   }, [])
-
-//   const skip = () => onComplete()
-
-//   return (
-//     <div
-//       ref={introRef}
-//       style={{
-//         position: 'fixed', inset: 0, background: '#000',
-//         zIndex: 9999, display: 'flex', alignItems: 'center',
-//         justifyContent: 'center', overflow: 'hidden',
-//       }}
-//     >
-//       <style>{`
-//         @keyframes lineV {
-//           from { height: 0; top: 0; }
-//           to { height: 100%; top: 0; }
-//         }
-//         @keyframes lineH {
-//           from { width: 0; }
-//           to { width: 100%; }
-//         }
-//         @keyframes glowBurst {
-//           0%   { width: 0px; height: 0px; opacity: 1; }
-//           50%  { width: 250px; height: 250px; opacity: 0.35; }
-//           100% { width: 480px; height: 480px; opacity: 0; }
-//         }
-//         @keyframes cmIn {
-//           to { opacity: 1; }
-//         }
-//         @keyframes fadeUp {
-//           from { opacity: 0; transform: translateY(14px); }
-//           to   { opacity: 1; transform: translateY(0); }
-//         }
-//         @keyframes scaleIn {
-//           from { opacity: 0; transform: scale(0.55); }
-//           to   { opacity: 1; transform: scale(1); }
-//         }
-//         @keyframes divGrow {
-//           to { width: 280px; }
-//         }
-//         @keyframes progFill {
-//           to { width: 100%; }
-//         }
-//         @keyframes ringPulse {
-//           0%, 100% { transform: scale(1);   opacity: 0.45; }
-//           50%       { transform: scale(1.1); opacity: 0; }
-//         }
-//         @keyframes splitTop {
-//           to { transform: translateY(-100%); }
-//         }
-//         @keyframes splitBot {
-//           to { transform: translateY(100%); }
-//         }
-//         @keyframes flashAnim {
-//           0%   { opacity: 0.7; }
-//           100% { opacity: 0; }
-//         }
-//         @keyframes skipFade {
-//           to { opacity: 1; }
-//         }
-//       `}</style>
-
-//       {/* Scanlines */}
-//       <div style={{
-//         position: 'absolute', inset: 0, pointerEvents: 'none',
-//         background: 'repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px)',
-//         zIndex: 1,
-//       }} />
-
-//       {/* Vignette */}
-//       <div style={{
-//         position: 'absolute', inset: 0, pointerEvents: 'none',
-//         background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.82) 100%)',
-//         zIndex: 1,
-//       }} />
-
-//       {/* Vertical Line */}
-//       <div style={{
-//         position: 'absolute', left: '50%', top: 0,
-//         width: '1px', height: 0,
-//         background: 'linear-gradient(to bottom, transparent, #0ea5e9 40%, #0ea5e9 60%, transparent)',
-//         transform: 'translateX(-50%)',
-//         animation: 'lineV 1.2s 0.3s ease forwards',
-//         zIndex: 2,
-//       }} />
-
-//       {/* Horizontal Line */}
-//       <div style={{
-//         position: 'absolute', top: '50%', left: 0,
-//         height: '1px', width: 0,
-//         background: 'linear-gradient(to right, transparent, #0ea5e9 40%, #0ea5e9 60%, transparent)',
-//         transform: 'translateY(-50%)',
-//         animation: 'lineH 1s 1.3s ease forwards',
-//         zIndex: 2,
-//       }} />
-
-//       {/* Center Glow Burst when lines meet */}
-//       <div style={{
-//         position: 'absolute', left: '50%', top: '50%',
-//         transform: 'translate(-50%, -50%)',
-//         width: 0, height: 0,
-//         background: 'radial-gradient(circle, rgba(14,165,233,0.65) 0%, transparent 70%)',
-//         borderRadius: '50%', opacity: 0,
-//         animation: 'glowBurst 0.6s 2.2s ease forwards',
-//         zIndex: 3,
-//       }} />
-
-//       {/* Corner Marks */}
-//       {[
-//         { style: { top: 16, left: 16, borderTop: '1.5px solid #0ea5e9', borderLeft: '1.5px solid #0ea5e9' }, delay: '2s' },
-//         { style: { top: 16, right: 16, borderTop: '1.5px solid #0ea5e9', borderRight: '1.5px solid #0ea5e9' }, delay: '2.1s' },
-//         { style: { bottom: 16, left: 16, borderBottom: '1.5px solid #0ea5e9', borderLeft: '1.5px solid #0ea5e9' }, delay: '2.2s' },
-//         { style: { bottom: 16, right: 16, borderBottom: '1.5px solid #0ea5e9', borderRight: '1.5px solid #0ea5e9' }, delay: '2.3s' },
-//       ].map((c, i) => (
-//         <div key={i} style={{
-//           position: 'absolute', width: 32, height: 32, opacity: 0, zIndex: 4,
-//           animation: `cmIn 0.3s ${c.delay} ease forwards`,
-//           ...c.style,
-//         }} />
-//       ))}
-
-//       {/* Brand Content */}
-//       <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-//         {/* Pre tag */}
-//         <div style={{
-//           fontSize: 10, letterSpacing: 6, color: 'rgba(255,255,255,0.25)',
-//           textTransform: 'uppercase', marginBottom: 18,
-//           opacity: 0, animation: 'fadeUp 0.6s 2.4s ease forwards',
-//         }}>
-//           Est. 2010 — Chembur, Mumbai
-//         </div>
-
-//         {/* Logo row */}
-//         <div style={{
-//           display: 'flex', alignItems: 'center', gap: 20,
-//           opacity: 0, animation: 'fadeUp 0.8s 2.7s ease forwards',
-//         }}>
-//           <div style={{
-//             width: 64, height: 64, background: '#0ea5e9',
-//             borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center',
-//             position: 'relative',
-//           }}>
-//             <img src="/logo.png" alt="SRP Traders" className="w-20 h-20 object-contain"/>
-//             <div style={{
-//               position: 'absolute', inset: -6, borderRadius: 20,
-//               border: '1px solid rgba(14,165,233,0.35)',
-//               animation: 'ringPulse 2.5s 3.5s ease infinite',
-//             }} />
-//           </div>
-//           <div>
-//             <div style={{ fontSize: 52, fontWeight: 500, color: '#fff', letterSpacing: 8, lineHeight: 1 }}>SRP</div>
-//             <div style={{ fontSize: 15, color: '#0ea5e9', letterSpacing: 8, textTransform: 'uppercase', marginTop: 4 }}>Traders</div>
-//           </div>
-//         </div>
-
-//         {/* Divider */}
-//         <div style={{
-//           width: 0, height: 1, margin: '20px 0',
-//           background: 'linear-gradient(to right, transparent, #0ea5e9, transparent)',
-//           animation: 'divGrow 0.8s 3.2s ease forwards',
-//         }} />
-
-//         {/* Sub text */}
-//         <div style={{
-//           fontSize: 10, letterSpacing: 5, color: 'rgba(255,255,255,0.2)',
-//           textTransform: 'uppercase',
-//           opacity: 0, animation: 'fadeUp 0.6s 3.6s ease forwards',
-//         }}>
-//           Hardware &nbsp;•&nbsp; Industrial Tools &nbsp;•&nbsp; Mumbai
-//         </div>
-
-//         {/* Built Tough */}
-//         <div style={{
-//           fontSize: 52, fontWeight: 500, color: '#fff',
-//           letterSpacing: 6, textTransform: 'uppercase', marginTop: 10,
-//           opacity: 0, animation: 'scaleIn 0.6s 4s cubic-bezier(0.34,1.56,0.64,1) forwards',
-//         }}>
-//           Built <span style={{ color: '#0ea5e9' }}>Tough</span>
-//         </div>
-
-//         {/* Progress bar */}
-//         <div style={{
-//           width: 250, height: 1, background: 'rgba(255,255,255,0.08)',
-//           borderRadius: 1, overflow: 'hidden', marginTop: 28,
-//           opacity: 0, animation: 'fadeUp 0.5s 2.6s ease forwards',
-//         }}>
-//           <div style={{
-//             height: '100%', width: 0,
-//             background: 'linear-gradient(to right, #0369a1, #0ea5e9, #38bdf8)',
-//             animation: 'progFill 5.5s 3s ease forwards',
-//           }} />
-//         </div>
-//         <div style={{
-//           fontSize: 10, color: 'rgba(255,255,255,0.2)', letterSpacing: 3,
-//           textTransform: 'uppercase', marginTop: 8,
-//           opacity: 0, animation: 'fadeUp 0.5s 2.7s ease forwards',
-//         }}>
-//           Loading SRP Traders...
-//         </div>
-//       </div>
-
-//       {/* Split reveal */}
-//       <div style={{
-//         position: 'absolute', top: 0, left: 0, width: '100%', height: '50%',
-//         background: '#000', zIndex: 20,
-//         animation: 'splitTop 0.8s 8.2s cubic-bezier(0.76,0,0.24,1) forwards',
-//       }} />
-//       <div style={{
-//         position: 'absolute', bottom: 0, left: 0, width: '100%', height: '50%',
-//         background: '#000', zIndex: 20,
-//         animation: 'splitBot 0.8s 8.2s cubic-bezier(0.76,0,0.24,1) forwards',
-//       }} />
-
-//       {/* Flash */}
-//       <div style={{
-//         position: 'absolute', inset: 0, background: '#fff',
-//         zIndex: 25, opacity: 0, pointerEvents: 'none',
-//         animation: 'flashAnim 0.2s 8.1s ease forwards',
-//       }} />
-
-//       {/* Skip */}
-//       <button
-//         onClick={skip}
-//         style={{
-//           position: 'absolute', bottom: 20, right: 20, zIndex: 30,
-//           background: 'rgba(255,255,255,0.05)', border: '0.5px solid rgba(255,255,255,0.12)',
-//           color: 'rgba(255,255,255,0.3)', fontSize: 11, padding: '7px 14px',
-//           borderRadius: 8, cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase',
-//           opacity: 0, animation: 'skipFade 0.5s 2s ease forwards',
-//         }}
-//       >
-//         Skip ›
-//       </button>
-//     </div>
-//   )
-// }
-
-
-//updated one 
 // ─── Cinematic Intro — "Precision Cut" ─────────────────────────
-// SRP Traders · laser-cut wordmark + floating tool schematics + toolbox-lid transition
-// Render this as the FIRST thing in Home.jsx's return (not behind any loading/data gate)
-// so it paints the instant the page opens, e.g.:
-//   return (<>{showIntro && <CinematicIntro onComplete={() => setShowIntro(false)} />}<Rest /></>)
 
 const TOTAL_MS = 9500
 
-// simple line-art tool schematics — no fills, no emoji, technical/blueprint style
 const ToolIcon = ({ type }) => {
   const s = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round' }
   switch (type) {
@@ -799,14 +532,6 @@ const Home = () => {
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {/* {CATEGORIES.map((cat) => (
-              <Link key={cat.name} to={`/shop?category=${encodeURIComponent(cat.name)}`}
-                className={`bg-gradient-to-br ${cat.color} text-white rounded-2xl p-5 text-center hover:scale-105 transition-transform duration-200 shadow-md`}>
-                <div className="text-3xl mb-2">{cat.icon}</div>
-                <p className="font-semibold text-sm leading-tight">{cat.name}</p>
-                <p className="text-white/70 text-xs mt-1">{cat.count}</p>
-              </Link>
-            ))} */}
             {CATEGORIES.map((cat) => {
   const IconComponent = CATEGORY_ICONS[cat.name] || Wrench
   return (
