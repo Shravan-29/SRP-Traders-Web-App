@@ -26,7 +26,6 @@ const Checkout = () => {
   const [showReviewModal, setShowReviewModal] = useState(false)
   const [reviewItems, setReviewItems] = useState([])
 
-  // Cart items ko ref mein rakhte hain taaki handler callback mein fresh copy mile
   const itemsRef = useRef(items)
   itemsRef.current = items
 
@@ -89,7 +88,6 @@ const Checkout = () => {
     if (!validateAddress()) return
     setLoading(true)
 
-    // Cart items capture karo order place hone se pehle
     const capturedItems = itemsRef.current.map(i => ({
       productId: i.id,
       productName: i.name,
@@ -149,12 +147,12 @@ const Checkout = () => {
               paymentId: response.razorpay_payment_id,
             })
 
-            // Step 3: Cart clear karo
+            // Step 3: Cart clearing
             dispatch(clearCart())
             toast.success('Payment successful! Order placed.')
             setLoading(false)
 
-            // Step 4: Review modal dikhao
+            // Step 4: show Review modal 
             setReviewItems(capturedItems)
             setShowReviewModal(true)
 
@@ -197,8 +195,7 @@ const Checkout = () => {
     setShowReviewModal(false)
     navigate('/orders')
   }
-
-  // Agar cart khali hai aur review modal bhi nahi dikh raha toh cart pe redirect
+  
   if (items.length === 0 && !showReviewModal) {
     navigate('/cart')
     return null
