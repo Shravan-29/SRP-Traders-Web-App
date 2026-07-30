@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-// import { Users, Package, ShoppingBag, TrendingUp, Loader2, RefreshCw } from 'lucide-react'
 import { Users, Package, ShoppingBag, TrendingUp, Loader2, RefreshCw, Truck } from 'lucide-react'
 import api from '../../services/api'
 
@@ -47,7 +46,7 @@ const AdminDashboard = () => {
 
       let totalProducts = 0
       if (productsResult.status === 'fulfilled') {
-        // content array ya totalElements — dono handle karo
+        // content array ya totalElements — both will be handled
         const data = productsResult.value.data
         if (data.totalElements !== undefined) {
           totalProducts = data.totalElements
